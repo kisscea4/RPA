@@ -1,0 +1,47 @@
+Year = DateTime.Now.Year.ToString 
+
+DateTime.ParseExact(4/11,"M/dd",Nothing).ToString("MM/dd") 
+
+Select문 
+(From r In DT_system.Select() Where row.Item(13).ToString.Contains((r("부품명")).ToString) and (r("부품명")).ToString <> "" Select r).CopyToDataTable
+
+dt.rows.indexof((from dr as datarow in dt where dr.item("ColumnName").tostring.equals("Leonardo") select dr).copytodatatable())+1
+
+DT_NEWCUTExcelALL.Rows.IndexOf((From x as DataRow in  DT_NEWCUTExcelALL  where x.Item(0).ToString.Equals(Str_NCUTName) Select x).CopyToDataTable())+1
+
+- Test라는 배열안에 첫번째 글자가 1일때 
+StrArr_Test.AsEnumerable().Where (Function (a) a.ToString.StartsWith("1")).Toarray(0)
+
+  
+엑셀에서 셀위치?
+system.data.enumerableRowCollection 변수타입?
+DT_NEWCUTExcelALL.AsEnumerable.Where(Function(x) x.Field(Of Object)(0).ToString.Trim=(Str_NCUTName))
+
+
+
+(From r In DT_ALL_Row.Select() Where r.Item(0).ToString.Contains(in_Str_Today) and (r(0)).ToString <> "" Select r).Count =0
+(From r In DT_ExcelCut.Select() Where frow.Item(0).ToString.Contains((r(0)).ToString) Or (r(1)).ToString <> "" Select r).count = 0
+
+오름차순 ->
+(From x In StrArr_FORM.AsEnumerable Order By convert.ToString(x) descending Select x).ToArray(0)
+
+형변환후 차순
+(From x In DT_TEST.AsEnumerable Order By convert.ToInt32(cint(x(0)))  descending Select x).CopyToDataTable
+
+
+
+
+
+
+dtData.DefaultView.ToTable(True, "col name")
+
+컬럼명을 배열로
+(From row in DT_Master.AsEnumerable() Select Convert.Tostring(row("MES공정명"))).ToArray()
+
+중복컬럼 제거
+[List 이름].Distinct().ToList()
+
+DT_ALL = new Dictionary(of String, DataTable)
+DT_ALL("데이터테이블명") = 저장할 데이터테이블
+
+
