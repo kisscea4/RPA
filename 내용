@@ -29,7 +29,9 @@ DT_NEWCUTExcelALL.AsEnumerable.Where(Function(x) x.Field(Of Object)(0).ToString.
 (From x In DT_TEST.AsEnumerable Order By convert.ToInt32(cint(x(0)))  descending Select x).CopyToDataTable
 
 
-
+DT의 컬럼명에 조건에 따라 값 변경
+DT_Test.AsEnumerable.Select(Function(r) DT_Test.Clone.LoadDataRow({String.Concat(r(0),"주"))},true)).CopyToDataTable,
+LoadDataRow({r(0),r(1)}),true))형식으로 컬럼의 갯수만큼가져와야 카피가 됨
 
 
 
