@@ -1,0 +1,10 @@
+"$shell = New-Object -ComObject Shell.Application" + vbCrLf +
+"$zip = $shell.NameSpace($StrZipFilePath)" + vbCrLf +
+"$dest = $shell.NameSpace($StrDestPath)" + vbCrLf +
+"foreach ($item In $zip.items()) {" + vbCrLf +
+" If (Test-Path (Join-Path $StrDestPath $item.Name))" + vbCrLf +
+" {" + vbCrLf +
+"   Remove-Item (Join-Path $StrDestPath $item.Name)" + vbCrLf +
+" }" + vbCrLf +
+"}" + vbCrLf +
+"$dest.CopyHere($zip.Items())"
