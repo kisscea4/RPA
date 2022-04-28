@@ -36,12 +36,18 @@ LoadDataRow({r(0),r(1)}),true))형식으로 컬럼의 갯수만큼가져와야 �
 
 
 dtData.DefaultView.ToTable(True, "col name")
+dtData = dtData.DefaultView.ToTable(True, "col name")
+
+true : 중복제거, false : 해당 컬럼값만 호출
+
 
 컬럼명을 배열로
 (From row in DT_Master.AsEnumerable() Select Convert.Tostring(row("MES공정명"))).ToArray()
 
 중복컬럼 제거
 [List 이름].Distinct().ToList()
+
+
 
 DT_ALL = new Dictionary(of String, DataTable)
 DT_ALL("데이터테이블명") = 저장할 데이터테이블
