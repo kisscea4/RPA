@@ -52,4 +52,4 @@ true : 중복제거, false : 해당 컬럼값만 호출
 DT_ALL = new Dictionary(of String, DataTable)
 DT_ALL("데이터테이블명") = 저장할 데이터테이블
 
-
+Get Credential에서 비밀번호 볼때 = new system.Net.networkCredenetial("",비밀번호변수).Password
