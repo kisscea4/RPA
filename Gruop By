@@ -1,0 +1,17 @@
+(From row In RawDataTable.AsEnumerable()
+Group row By MainCode = New With {
+Key .Id = row.Item(MainColumnName)
+} Into DataGroup = Group
+Select New With {
+.Code = MainCode.Id,
+.Quantity = DataGroup.Where(Function( r ) r.Item(MainColumnName).ToString() = MainCode.Id.ToString()).ToArray.Count,
+.Sum = DataGroup.Sum(Function( r ) Double.Parse(r.Item(SumColumnName).ToString()))
+}).ToList
+-----------------(MainColumnName = Key로 잡을 컬럼명) (SumColumnName = 합계를 구할 컬럼명)--------------------- 변수 형식  IEnumerable<Object>
+
+
+String.Join(",", IEnumObjGroupBy(0).ToString.Split(","c).Select(Function(item) item.ToString.Split("="c)(0).Replace("{", "").Trim))+
+Environment.NewLine+String.Join(Environment.NewLine, 
+IEnumObjGroupBy.Select(Function(row) String.Join(",", row.ToString.Split(","c).Select(Function(item) item.ToString.Split("="c)(1).Replace("}", "").Trim))))
+
+--------------컬럼, 값으로 나눠주는 String형식 ------------
