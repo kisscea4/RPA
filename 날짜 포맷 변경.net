@@ -1,0 +1,15 @@
+	string input = Str_작업날짜;
+
+        // 바로 파싱 (형식이 항상 맞다고 가정)
+        DateTime date = DateTime.ParseExact(input, "yyyyMMdd", System.Globalization.CultureInfo.InvariantCulture);
+
+        DateTime now = DateTime.Now;
+
+        // 날짜 + 현재 시간 합치기
+        DateTime combined = new DateTime(date.Year, date.Month, date.Day, now.Hour, now.Minute, 0);
+
+        string englishFormat = combined.ToString("MMM dd tt HH:00", System.Globalization.CultureInfo.InvariantCulture);
+        string koreanFormat = combined.ToString("MM월 dd일 HH시", System.Globalization.CultureInfo.InvariantCulture);
+        
+        str_영문 = englishFormat;
+        str_한글 = koreanFormat;
