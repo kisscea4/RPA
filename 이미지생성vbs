@@ -1,0 +1,42 @@
+
+vbs 스크립트
+ex)
+
+
+'Dim objExcel, objWorkbook, objSheet, ws
+Dim el, wb, ws, result, cnt
+' 엑셀 애플리케이션 객체 생성
+Set objExcel = GetObject(,"Excel.Application")
+
+' 열려있는 엑셀 파일에 접근
+Set objWorkbook = objExcel.ActiveWorkbook
+Set ws = objWorkbook.Worksheets("주별구매대응률 집계")
+
+// 해당 열 숨기기 하는 부분 //
+For i = 4 to %Int_마지막열Column + 1%
+On Error Resume Next
+result = ws.cells(3, i).Value
+
+If result = "%Str_작업하는월%月計" Or result = "年累計" Or  result = "W%Out_Int_WeekOfYear%"  Then
+		Continue
+	else 
+	 	ws.Columns(i).EntireColumn.Hidden = True
+	End if
+Err.Clear
+Next
+// 해당 열 숨기기 하는 부분 //
+WScript.Sleep 3000
+
+// 이미지 파일로 생성 하는 부분 //
+Set rng = ws.Range("A1:%Str_연간총Column위치%44")
+rng.CopyPicture
+WScript.Sleep 30000
+Set cht = ws.ChartObjects.Add(0,0,rng.Width, rng.Height)
+With cht.Chart
+	.Paste
+	.ChartArea.Format.Line.Visible = msoFalse
+	.ChartArea.Format.Fill.Visible = msoFalse
+	Filename= ("%Str_OutputFolderPath%\APSCMSA903M.png")
+	.Export Filename
+End With
+// 이미지 파일로 생성 하는 부분 //
