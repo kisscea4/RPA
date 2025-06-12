@@ -15,3 +15,88 @@ Environment.NewLine+String.Join(Environment.NewLine,
 IEnumObjGroupBy.Select(Function(row) String.Join(",", row.ToString.Split(","c).Select(Function(item) item.ToString.Split("="c)(1).Replace("}", "").Trim))))
 
 --------------컬럼, 값으로 나눠주는 String형식 ------------
+
+.NET 소스
+
+DataTable table = DT_TEST;
+
+// 그룹핑 결과를 저장할 Dictionary (key: Tuple<A,B>, value: sum of C)
+var dict = new Dictionary<Tuple<string, string,string>, int>();
+
+foreach (DataRow row in table.Rows)
+{
+    string a = row["요청법인"].ToString();
+    string b = row["자재"].ToString();
+    string c = row["설명"].ToString();
+    int d = Convert.ToInt32(row["요청수량"]);
+
+    var key = Tuple.Create(a, b, c);
+
+    if (dict.ContainsKey(key))
+    {
+        dict[key] += d;
+    }
+    else
+    {
+        dict[key] = d;
+    }
+}
+
+// 결과를 담을 DataTable 생성
+DataTable resultTable = new DataTable();
+resultTable.Columns.Add("요청법인", typeof(string));
+resultTable.Columns.Add("자재", typeof(string));
+resultTable.Columns.Add("자재명", typeof(string));
+resultTable.Columns.Add("요청수량", typeof(int));
+
+foreach (var kvp in dict)
+{
+    resultTable.Rows.Add(kvp.Key.Item1, kvp.Key.Item2,kvp.Key.Item3, kvp.Value);
+}
+
+DT_TEST1 = resultTable; //
+-----------------------------------------------------------------------------------------------------------
+
+해당 DT에서 컬럼4개 중 3개로 변경해서 값 합칠때 쓰는 
+        DataTable table = DT_TEST;
+
+//        DataTable DT_TEST1 = GroupAndMerge(DT_TEST);
+
+
+	// 그룹핑 결과를 저장할 Dictionary (key: Tuple<A,B,C>, value: sum of D)
+	var dict = new Dictionary<Tuple<string, string,string>, int>();
+
+	foreach (DataRow row in table.Rows)
+	{
+	    string a = row["요청법인"].ToString();
+	    string b = row["자재"].ToString();
+	    string c = row["설명"].ToString();
+	    int d = Convert.ToInt32(row["요청수량"]);
+
+	    var key = Tuple.Create(a, b, c);
+
+	    if (dict.ContainsKey(key))	
+	    {
+     	   dict[key] += d;
+	    }
+	    else
+	    {
+	        dict[key] = d;
+	    }
+	}
+
+	// 결과를 담을 DataTable 생성
+	DataTable resultTable = new DataTable();
+	resultTable.Columns.Add("요청법인_자재", typeof(string));
+	resultTable.Columns.Add("요청수량", typeof(int));
+
+        foreach (var kvp in dict)
+        {
+            string ab = kvp.Key.Item1 + "_" + kvp.Key.Item2;
+            int sumD = kvp.Value;
+            resultTable.Rows.Add(ab, sumD);
+        }
+
+	DT_TEST1 = resultTable;
+
+-------------------------------------------------------------------------
