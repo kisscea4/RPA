@@ -1,0 +1,51 @@
+using System;
+using System.Data;
+
+class Program
+{
+    static void Main()
+    {
+        // a테이블: A~G 컬럼(이미 존재, 데이터 예시)
+        DataTable a = new DataTable();
+        a.Columns.Add("A", typeof(string));
+        a.Columns.Add("B", typeof(string));
+        a.Columns.Add("C", typeof(string));
+        a.Columns.Add("D", typeof(string));
+        a.Columns.Add("E", typeof(string));
+        a.Columns.Add("F", typeof(string)); // 결과 매핑 열
+        a.Columns.Add("G", typeof(string));
+
+        a.Rows.Add("1", "a", "b", "c", "d", "", "e");
+        a.Rows.Add("2", "f", "g", "h", "i", "", "j");
+        a.Rows.Add("3", "k", "l", "m", "n", "", "o");
+        a.Rows.Add("4", "p", "q", "r", "s", "", "t");
+        a.Rows.Add("5", "u", "v", "w", "x", "", "y");
+
+        // b테이블: A, B 컬럼만
+        DataTable b = new DataTable();
+        b.Columns.Add("A", typeof(string));
+        b.Columns.Add("B", typeof(string));
+        b.Rows.Add("매치-1", "1");
+        b.Rows.Add("매치-2", "2");
+        b.Rows.Add("매치-4", "4");
+        b.Rows.Add("매치-9", "9");
+
+        // a의 A == b의 B 이면 b의 A를 a의 F에 저장
+        foreach (DataRow rowA in a.Rows)
+        {
+            string a_a = rowA["A"].ToString();
+            DataRow[] matchRows = b.Select("B = '" + a_a + "'");
+
+            if (matchRows.Length > 0)
+                rowA["F"] = matchRows[0]["A"].ToString();
+            else
+                rowA["F"] = ""; // 없으면 빈 값
+        }
+
+        // 결과 확인 (필요시 전체 a테이블 출력)
+        foreach (DataRow row in a.Rows)
+        {
+            Console.WriteLine($"A:{row["A"]}, F:{row["F"]}");
+        }
+    }
+}
