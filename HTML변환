@@ -1,0 +1,57 @@
+DT_TEST2 = new System.Data.DataTable();
+
+DT_TEST2.Columns.Add("Column1");
+DT_TEST2.Columns.Add("Column2");
+
+string html = Str_TEST;
+
+html = html.Replace("&lt;", "<");
+html = html.Replace("&gt;", ">");
+html = html.Replace("&amp;", "&");
+html = html.Replace("&quot;", "\"");
+
+// 마지막 table 위치 찾기
+int lastTableStart = html.LastIndexOf("<table");
+
+if (lastTableStart >= 0)
+{
+    string lastTable = html.Substring(lastTableStart);
+
+    System.Text.RegularExpressions.MatchCollection rows =
+    System.Text.RegularExpressions.Regex.Matches(
+        lastTable,
+        "<tr[^>]*>(.*?)</tr>",
+        System.Text.RegularExpressions.RegexOptions.Singleline |
+        System.Text.RegularExpressions.RegexOptions.IgnoreCase
+    );
+
+    foreach (System.Text.RegularExpressions.Match rowMatch in rows)
+    {
+        System.Text.RegularExpressions.MatchCollection divs =
+        System.Text.RegularExpressions.Regex.Matches(
+            rowMatch.Value,
+            "<div[^>]*>(.*?)</div>",
+            System.Text.RegularExpressions.RegexOptions.Singleline |
+            System.Text.RegularExpressions.RegexOptions.IgnoreCase
+        );
+
+        if (divs.Count >= 2)
+        {
+            string col1 = divs[0].Groups[1].Value.Trim();
+            string col2 = divs[1].Groups[1].Value.Trim();
+
+            if (col1 != "" || col2 != "")
+            {
+                System.Data.DataRow row = DT_TEST2.NewRow();
+
+                row["Column1"] = col1;
+                row["Column2"] = col2;
+
+                DT_TEST2.Rows.Add(row);
+            }
+        }
+    }
+}
+
+
+메일 본문을 HTML로 받아서 본문에 있는 데이터 테이블로 변환 시키는 .NET 코드
